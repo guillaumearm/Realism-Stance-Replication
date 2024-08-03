@@ -1,6 +1,9 @@
-﻿using Aki.Reflection.Patching;
+﻿using SPT.Reflection.Patching;
 using Fika.Core.Coop.Players;
 using System.Reflection;
+using System.Threading.Tasks;
+using EFT;
+using Fika.Core.Coop.GameMode;
 
 namespace StanceReplication
 {
@@ -8,15 +11,16 @@ namespace StanceReplication
     {
         protected override MethodBase GetTargetMethod()
         {
-            return typeof(CoopBot).GetMethod("Start", BindingFlags.NonPublic | BindingFlags.Instance);
+            return typeof(CoopGame).GetMethod("CreateBot", BindingFlags.NonPublic | BindingFlags.Instance);
         }
 
         [PatchPostfix]
-        public static void Postfix(CoopBot __instance)
+        public static async void Postfix(Task<LocalPlayer>__result)
         {
             if (Plugin.EnableForBots.Value) 
             {
-                __instance.gameObject.AddComponent<RSR_Component>();
+                var res = await __result;
+                ((CoopBot)res).gameObject.AddComponent<RSR_Component>();
             }
         }
     }

@@ -4,7 +4,7 @@ using BepInEx.Logging;
 using Comfort.Common;
 using EFT.UI;
 using Fika.Core.Coop.Components;
-using Fika.Core.Coop.Matchmaker;
+
 using Fika.Core.Modding;
 using Fika.Core.Modding.Events;
 using Fika.Core.Networking;
@@ -20,7 +20,7 @@ namespace StanceReplication
     [BepInDependency("com.fika.core", BepInDependency.DependencyFlags.HardDependency)]
     public class Plugin : BaseUnityPlugin
     {
-        internal static ManualLogSource REAL_Logger;
+        public static ManualLogSource REAL_Logger;
         public static Dictionary<int, RSR_Observed_Component> ObservedComponents;
         public static ConfigEntry<bool> EnableForBots { get; set; }
         public static ConfigEntry<float> CancelTimer { get; set; }
@@ -32,6 +32,9 @@ namespace StanceReplication
 
         protected void Awake()
         {
+            REAL_Logger = Logger;
+            REAL_Logger.LogInfo($"Stance Replication has been loaded.");
+            
             EnableForBots = Config.Bind<bool>("Options", "Enable Stance Replication For Bots", true, new ConfigDescription("Requires Restart. Toggles replication for bots. Disabling can help improve performance if there are any issues.", null, new ConfigurationManagerAttributes { Order = 1 }));
             ResetTimer = Config.Bind<float>("Options", "Reset Timer", 0.2f, new ConfigDescription("Time before stance resets after sprinting or collision.", new AcceptableValueRange<float>(0.0f, 20f), new ConfigurationManagerAttributes { ShowRangeAsPercent = false, Order = 3, IsAdvanced = true }));
             CancelTimer = Config.Bind<float>("Options", "Cancel Timer", 0.2f, new ConfigDescription("Time before stance is cancelled due to sprinting or collision.", new AcceptableValueRange<float>(0.0f, 20f), new ConfigurationManagerAttributes { ShowRangeAsPercent = false, Order = 4, IsAdvanced = true }));
@@ -46,40 +49,39 @@ namespace StanceReplication
             new CoopPlayer_Create_Patch().Enable();
             new ObservedCoopPlayer_Create_Patch().Enable();
 
-            FikaEventDispatcher.SubscribeEvent<FikaClientCreatedEvent>(ClientCreated);
-            FikaEventDispatcher.SubscribeEvent<FikaServerCreatedEvent>(ServerCreated);
-            FikaEventDispatcher.SubscribeEvent<FikaGameCreatedEvent>(GameWorldStarted);
+            FikaEventDispatcher.SubscribeEvent<FikaClientCreatedEvent>((ev) =>
+            {
+                REAL_Logger.LogInfo($"Stance Replication client has been created");
+                ev.Client.packetProcessor.SubscribeNetSerializable<RealismPacket>(HandleRealismPacketClient);
+            });
+            
+            
+            FikaEventDispatcher.SubscribeEvent<FikaServerCreatedEvent>((ev) =>
+            {
+                REAL_Logger.LogInfo($"Stance Replication server has been created");
+                ev.Server.packetProcessor.SubscribeNetSerializable<RealismPacket, NetPeer>(HandleRealismPacketServer);
+            });
+
+            FikaEventDispatcher.SubscribeEvent<FikaGameCreatedEvent>((ev) =>
+            {
+                REAL_Logger.LogInfo($"Stance Replication game world has been created");
+                if (ObservedComponents != null)
+                {
+                    ObservedComponents.Clear();
+                }
+                else
+                {
+                    ObservedComponents = new Dictionary<int, RSR_Observed_Component>();
+                }
+            });
 
             ObservedComponents = new Dictionary<int, RSR_Observed_Component>();
 
-            REAL_Logger = Logger;
-            REAL_Logger.LogInfo($"{nameof(Plugin)} has been loaded.");
+            
 
         }
-
-        private void GameWorldStarted(FikaGameCreatedEvent @event)
-        {
-            if (ObservedComponents != null)
-            {
-                ObservedComponents.Clear();
-            }
-            else
-            {
-                ObservedComponents = new Dictionary<int, RSR_Observed_Component>();
-            }
-        }
-
-        private void ServerCreated(FikaServerCreatedEvent @event)
-        {
-            @event.Server.packetProcessor.SubscribeNetSerializable<RealismPacket, NetPeer>(HandleRealismPacketServer);
-        }
-
-        private void ClientCreated(FikaClientCreatedEvent @event)
-        {
-            @event.Client.packetProcessor.SubscribeNetSerializable<RealismPacket>(HandleRealismPacketClient);
-        }
-
-        private void HandleRealismPacketClient(RealismPacket packet)
+        
+        public void HandleRealismPacketClient(RealismPacket packet)
         {
             if (ObservedComponents.TryGetValue(packet.NetID, out var player))
             {
@@ -87,7 +89,7 @@ namespace StanceReplication
             }
         }
 
-        private void HandleRealismPacketServer(RealismPacket packet, NetPeer peer)
+        public void HandleRealismPacketServer(RealismPacket packet, NetPeer peer)
         {
             if (ObservedComponents.TryGetValue(packet.NetID, out var player))
             {
