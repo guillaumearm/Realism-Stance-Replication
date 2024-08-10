@@ -85,7 +85,7 @@
     <Compile Include="CoopBot_Create_Patch.cs" />
     <Compile Include="ObservedCoopPlayer_Create_Patch.cs" />
     <Compile Include="CoopPlayer_Create_Patch.cs" />
-    <Compile Include="RealismLeftShoulderPatch.cs" />
+    <Compile Include="RealismLeftShoulderSwapPatch.cs" />
     <Compile Include="RealismPacket.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

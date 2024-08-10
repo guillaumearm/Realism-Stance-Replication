@@ -12,6 +12,7 @@ using LiteNetLib;
 using LiteNetLib.Utils;
 using System;
 using System.Collections.Generic;
+using Fika.Core.Coop.Players;
 using UnityEngine;
 
 namespace StanceReplication
@@ -49,7 +50,7 @@ namespace StanceReplication
             new CoopBot_Create_Patch().Enable();
             new CoopPlayer_Create_Patch().Enable();
             new ObservedCoopPlayer_Create_Patch().Enable();
-            new RealismLeftShoulderPatch().Enable();
+            new RealismLeftShoulderSwapPatch().Enable();
             
             
 
