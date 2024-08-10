@@ -16,7 +16,7 @@ using UnityEngine;
 
 namespace StanceReplication
 {
-    [BepInPlugin("com.lacyway.rsr", "RealismStanceReplication", "1.0.0")]
+    [BepInPlugin("com.lacyway.rsr", "RealismStanceReplication", "1.1.0")]
     [BepInDependency("com.fika.core", BepInDependency.DependencyFlags.HardDependency)]
     public class Plugin : BaseUnityPlugin
     {
