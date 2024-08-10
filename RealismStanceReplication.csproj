@@ -56,6 +56,9 @@
     <Reference Include="Fika.Core">
       <HintPath>..\Fika-Dependencies\BepInEx\plugins\Fika.Core.dll</HintPath>
     </Reference>
+    <Reference Include="RealismMod">
+      <HintPath>..\Fika-Dependencies\BepInEx\plugins\RealismMod.dll</HintPath>
+    </Reference>
     <Reference Include="spt-reflection">
       <HintPath>..\Fika-Dependencies\BepInEx\plugins\spt\spt-reflection.dll</HintPath>
     </Reference>
@@ -82,6 +85,7 @@
     <Compile Include="CoopBot_Create_Patch.cs" />
     <Compile Include="ObservedCoopPlayer_Create_Patch.cs" />
     <Compile Include="CoopPlayer_Create_Patch.cs" />
+    <Compile Include="RealismLeftShoulderPatch.cs" />
     <Compile Include="RealismPacket.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

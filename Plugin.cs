@@ -18,6 +18,7 @@ namespace StanceReplication
 {
     [BepInPlugin("com.lacyway.rsr", "RealismStanceReplication", "1.1.0")]
     [BepInDependency("com.fika.core", BepInDependency.DependencyFlags.HardDependency)]
+    [BepInDependency("RealismMod", BepInDependency.DependencyFlags.HardDependency)]
     public class Plugin : BaseUnityPlugin
     {
         public static ManualLogSource REAL_Logger;
@@ -48,6 +49,9 @@ namespace StanceReplication
             new CoopBot_Create_Patch().Enable();
             new CoopPlayer_Create_Patch().Enable();
             new ObservedCoopPlayer_Create_Patch().Enable();
+            new RealismLeftShoulderPatch().Enable();
+            
+            
 
             FikaEventDispatcher.SubscribeEvent<FikaClientCreatedEvent>((ev) =>
             {
