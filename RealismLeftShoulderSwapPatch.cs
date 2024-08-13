@@ -26,7 +26,6 @@ namespace StanceReplication
             CoopHandler fikaCoopHandler;
             if (CoopHandler.TryGetCoopHandler(out fikaCoopHandler))
             {
-                Plugin.REAL_Logger.LogInfo("StanceReplication is sending a fika weapon packet to indicate its swapped stance");
                 fikaCoopHandler.MyPlayer.PacketSender.FirearmPackets.Enqueue(new WeaponPacket()
                 {
                     HasStanceChange = true,  
