@@ -12,7 +12,7 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
+    <TargetFrameworkProfile />    
     <LangVersion>8</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -39,28 +39,28 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="0Harmony">
-      <HintPath>..\Fika-Dependencies\BepInEx\core\0Harmony.dll</HintPath>
-    </Reference>
-    <Reference Include="AnimationSystem.Types">
-      <HintPath>..\Fika-Dependencies\EscapeFromTarkov_Data\Managed\AnimationSystem.Types.dll</HintPath>
-    </Reference>
-    <Reference Include="Assembly-CSharp">
-      <HintPath>..\Fika-Dependencies\EscapeFromTarkov_Data\Managed\Assembly-CSharp.dll</HintPath>
-    </Reference>
-    <Reference Include="BepInEx">
-      <HintPath>..\Fika-Dependencies\BepInEx\core\BepInEx.dll</HintPath>
-    </Reference>
-    <Reference Include="Comfort">
-      <HintPath>..\Fika-Dependencies\EscapeFromTarkov_Data\Managed\Comfort.dll</HintPath>
-    </Reference>
-    <Reference Include="Fika.Core">
-      <HintPath>..\Fika-Dependencies\BepInEx\plugins\Fika.Core.dll</HintPath>
+      <HintPath>References\0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="RealismMod">
-      <HintPath>..\Fika-Dependencies\BepInEx\plugins\RealismMod.dll</HintPath>
+      <HintPath>References\RealismMod.dll</HintPath>
     </Reference>
     <Reference Include="spt-reflection">
-      <HintPath>..\Fika-Dependencies\BepInEx\plugins\spt\spt-reflection.dll</HintPath>
+      <HintPath>References\spt-reflection.dll</HintPath>
+    </Reference>
+    <Reference Include="AnimationSystem.Types">
+      <HintPath>References\AnimationSystem.Types.dll</HintPath>
+    </Reference>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>References\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="BepInEx">
+      <HintPath>References\BepInEx.dll</HintPath>
+    </Reference>
+    <Reference Include="Comfort">
+      <HintPath>References\Comfort.dll</HintPath>
+    </Reference>
+    <Reference Include="Fika.Core">
+      <HintPath>References\Fika.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -71,13 +71,13 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
     <Reference Include="UnityEngine">
-      <HintPath>..\Fika-Dependencies\EscapeFromTarkov_Data\Managed\UnityEngine.dll</HintPath>
+      <HintPath>References\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>..\Fika-Dependencies\EscapeFromTarkov_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>References\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.InputLegacyModule">
-      <HintPath>..\Fika-Dependencies\EscapeFromTarkov_Data\Managed\UnityEngine.InputLegacyModule.dll</HintPath>
+      <HintPath>References\UnityEngine.InputLegacyModule.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
