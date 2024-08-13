@@ -70,6 +70,9 @@ namespace StanceReplication
              * Fontaine: OP
                  — Today at 5:18 AM
                 Solarint told me he had this sort of error reported before since he added the bot patrol stance feature to SAIN. I've never seen it with Realism though.
+             
+             * This stack trace provided by Traveler did occur in Primal-13's playgroup as well
+             * But only when the match was loading. Errors did stop eventually and it was noted that the individual was experiencing alot of packet loss
              */
             
             
