@@ -8,11 +8,12 @@
     <OutputType>Library</OutputType>
     <RootNamespace>RealismStanceReplication</RootNamespace>
     <AssemblyName>RealismStanceReplication</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
+    <TargetFrameworkProfile />    
+    <LangVersion>8</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -39,6 +40,9 @@
   <ItemGroup>
     <Reference Include="0Harmony">
       <HintPath>References\0Harmony.dll</HintPath>
+    </Reference>
+    <Reference Include="RealismMod">
+      <HintPath>References\RealismMod.dll</HintPath>
     </Reference>
     <Reference Include="spt-reflection">
       <HintPath>References\spt-reflection.dll</HintPath>
@@ -81,6 +85,7 @@
     <Compile Include="CoopBot_Create_Patch.cs" />
     <Compile Include="ObservedCoopPlayer_Create_Patch.cs" />
     <Compile Include="CoopPlayer_Create_Patch.cs" />
+    <Compile Include="RealismLeftShoulderSwapPatch.cs" />
     <Compile Include="RealismPacket.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -2,20 +2,27 @@
 using BepInEx.Configuration;
 using BepInEx.Logging;
 using Comfort.Common;
+using EFT.UI;
+using Fika.Core.Coop.Components;
+
 using Fika.Core.Modding;
 using Fika.Core.Modding.Events;
 using Fika.Core.Networking;
 using LiteNetLib;
 using LiteNetLib.Utils;
+using System;
 using System.Collections.Generic;
+using Fika.Core.Coop.Players;
+using UnityEngine;
 
 namespace StanceReplication
 {
     [BepInPlugin("com.lacyway.rsr", "RealismStanceReplication", "1.1.0")]
     [BepInDependency("com.fika.core", BepInDependency.DependencyFlags.HardDependency)]
+    [BepInDependency("RealismMod", BepInDependency.DependencyFlags.HardDependency)]
     public class Plugin : BaseUnityPlugin
     {
-        internal static ManualLogSource REAL_Logger;
+        public static ManualLogSource REAL_Logger;
         public static Dictionary<int, RSR_Observed_Component> ObservedComponents;
         public static ConfigEntry<bool> EnableForBots { get; set; }
         public static ConfigEntry<float> CancelTimer { get; set; }
@@ -35,16 +42,15 @@ namespace StanceReplication
             Test2 = Config.Bind<float>("Debug", "Test Value 2", 1f, new ConfigDescription("", new AcceptableValueRange<float>(-1000f, 1000f), new ConfigurationManagerAttributes { ShowRangeAsPercent = false, Order = 2, IsAdvanced = true }));
             Test3 = Config.Bind<float>("Debug", "Test Value 3", 1f, new ConfigDescription("", new AcceptableValueRange<float>(-1000f, 1000f), new ConfigurationManagerAttributes { ShowRangeAsPercent = false, Order = 1, IsAdvanced = true }));
 
-
-
             new CoopBot_Create_Patch().Enable();
             new CoopPlayer_Create_Patch().Enable();
             new ObservedCoopPlayer_Create_Patch().Enable();
-
+            new RealismLeftShoulderSwapPatch().Enable();
+            
             FikaEventDispatcher.SubscribeEvent<FikaClientCreatedEvent>(ClientCreated);
             FikaEventDispatcher.SubscribeEvent<FikaServerCreatedEvent>(ServerCreated);
             FikaEventDispatcher.SubscribeEvent<FikaGameCreatedEvent>(GameWorldStarted);
-
+            
             ObservedComponents = new Dictionary<int, RSR_Observed_Component>();
 
             REAL_Logger = Logger;

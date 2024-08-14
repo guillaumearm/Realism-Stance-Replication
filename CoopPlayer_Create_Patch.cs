@@ -13,7 +13,7 @@ namespace StanceReplication
     {
         protected override MethodBase GetTargetMethod()
         {
-            return typeof(CoopPlayer).GetMethod("Create");
+            return typeof(CoopPlayer).GetMethod(nameof(CoopPlayer.SetupMainPlayer));
         }
 
         [PatchPostfix]

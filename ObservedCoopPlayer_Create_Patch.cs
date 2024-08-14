@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Fika.Core.Coop.Components;
 
 namespace StanceReplication
 {
@@ -13,14 +14,14 @@ namespace StanceReplication
     {
         protected override MethodBase GetTargetMethod()
         {
-            return typeof(ObservedCoopPlayer).GetMethod("InitObservedPlayer", BindingFlags.Public | BindingFlags.Instance);
+            return typeof(CoopHandler).GetMethod("SpawnObservedPlayer", BindingFlags.NonPublic | BindingFlags.Instance);
         }
 
         [PatchPostfix]
-        public static void Postfix(ObservedCoopPlayer __instance)
+        public static void Postfix(ObservedCoopPlayer __result)
         {
-            if (__instance.IsObservedAI && !Plugin.EnableForBots.Value) return;
-            __instance.gameObject.AddComponent<RSR_Observed_Component>();
+            if (__result.IsObservedAI && !Plugin.EnableForBots.Value) return;
+            __result.gameObject.AddComponent<RSR_Observed_Component>();
         }
     }
 }
